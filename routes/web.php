@@ -15,6 +15,13 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+Route::get('/check-db', function () {
+    return [
+        'path' => database_path('database.sqlite'),
+        'exists' => file_exists(database_path('database.sqlite')),
+    ];
+});
+
 Route::get("pdff", [ReceiptController::class, 'create']);
 
 Route::controller(ReceiptController::class)->middleware(['auth'])->name('erep.')->group(function(){
