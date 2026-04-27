@@ -15,11 +15,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/check-db', function () {
-    return [
-        'path' => database_path('database.sqlite'),
-        'exists' => file_exists(database_path('database.sqlite')),
-    ];
+Route::get('/run-migrate', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    return nl2br(Artisan::output());
 });
 
 Route::get("pdff", [ReceiptController::class, 'create']);
